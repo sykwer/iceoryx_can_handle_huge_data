@@ -29,6 +29,13 @@ ament_target_dependencies(talker rclcpp interfaces)
 add_executable(listener src/minimal_subscriber.cpp)
 ament_target_dependencies(listener rclcpp interfaces)
 
-install(TARGETS talker listener DESTINATION lib/${PROJECT_NAME})
+add_executable(iox_talker src/iceoryx_publisher.cpp)
+ament_target_dependencies(iox_talker rclcpp interfaces)
+
+add_executable(iox_listener src/iceoryx_subscriber.cpp)
+ament_target_dependencies(iox_listener rclcpp interfaces)
+
+install(TARGETS talker listener iox_talker iox_listener
+  DESTINATION lib/${PROJECT_NAME})
 
 ament_package()
