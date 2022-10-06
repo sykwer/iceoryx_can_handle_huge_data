@@ -3,6 +3,8 @@
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp/qos.hpp"
 
+#include <sys/time.h>
+
 #include "interfaces/msg/static_size_array.hpp"
 
 using std::placeholders::_1;
@@ -16,7 +18,11 @@ public:
 
 private:
   void topic_callback(const interfaces::msg::StaticSizeArray::SharedPtr msg) const {
-    RCLCPP_INFO(this->get_logger(), "I heard message ID: '%ld'", msg->id);
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    uint64_t latency = tv.tv_sec * 1000 * 1000 + tv.tv_usec - msg->timestamp;
+
+    RCLCPP_INFO(this->get_logger(), "I heard message ID: '%ld', latency = %ld us", msg->id, latency);
   }
 
   rclcpp::Subscription<interfaces::msg::StaticSizeArray>::SharedPtr subscription_;

@@ -5,6 +5,8 @@
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp/qos.hpp"
 
+#include <sys/time.h>
+
 #include "interfaces/msg/static_size_array.hpp"
 
 using namespace std::chrono_literals;
@@ -21,7 +23,13 @@ private:
   void timer_callback() {
     auto message = publisher_->borrow_loaned_message();
     message.get().id = count_++;
+
     RCLCPP_INFO(this->get_logger(), "Publishing Message ID: '%ld'", message.get().id);
+
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    message.get().timestamp = tv.tv_sec * 1000 * 1000 + tv.tv_usec;
+
     publisher_->publish(std::move(message));
   }
 
