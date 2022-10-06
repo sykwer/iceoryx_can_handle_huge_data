@@ -34,6 +34,18 @@ CYCLONEDDS_URL=file://$PWD/cyclonedds.xml ros2 run cpp_pubsub iox_listener
 ```
 Confirm that huge data (>2GiB) can be communicated powered by IceOryx.
 
+![iceoryx_without_loan](https://user-images.githubusercontent.com/18254663/194262430-5131380c-c6ee-4f9a-bb83-26fb03a9952d.png)
+
+You can also try true zero copy communication powered by the loan API.
+```
+CYCLONEDDS_URL=file://$PWD/cyclonedds.xml ros2 run cpp_pubsub iox_talker_loan
+CYCLONEDDS_URL=file://$PWD/cyclonedds.xml ros2 run cpp_pubsub iox_listener
+```
+
+Communication latency is drastically reduced by the true zero copy mechanism.
+
+![iceoryx_with_loan](https://user-images.githubusercontent.com/18254663/194264016-86137ae2-804a-42c4-bfe6-141262d2ec36.png)
+
 ## For Galactic Users (rclcpp bug)
 Apply this PR (https://github.com/ros2/rclcpp/pull/1657/files) as a patch, or the publisher and the subscriber will fail by `std::bad_alloc`.
 This bug is fixed in Humble and later versions.
