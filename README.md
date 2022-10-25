@@ -29,8 +29,8 @@ iox-roudi -c roudi_config.toml
 ```
 Launch a talker and a listener on different terminal windows respectively.
 ```
-CYCLONEDDS_URL=file://$PWD/cyclonedds.xml ros2 run cpp_pubsub iox_talker
-CYCLONEDDS_URL=file://$PWD/cyclonedds.xml ros2 run cpp_pubsub iox_listener
+CYCLONEDDS_URI=file://$PWD/cyclonedds.xml ros2 run cpp_pubsub iox_talker
+CYCLONEDDS_URI=file://$PWD/cyclonedds.xml ros2 run cpp_pubsub iox_listener
 ```
 Confirm that huge data (>2GiB) can be communicated powered by IceOryx.
 
@@ -38,8 +38,8 @@ Confirm that huge data (>2GiB) can be communicated powered by IceOryx.
 
 You can also try true zero copy communication powered by the loan API.
 ```
-CYCLONEDDS_URL=file://$PWD/cyclonedds.xml ros2 run cpp_pubsub iox_talker_loan
-CYCLONEDDS_URL=file://$PWD/cyclonedds.xml ros2 run cpp_pubsub iox_listener
+CYCLONEDDS_URI=file://$PWD/cyclonedds.xml ros2 run cpp_pubsub iox_talker_loaned
+CYCLONEDDS_URI=file://$PWD/cyclonedds.xml ros2 run cpp_pubsub iox_listener
 ```
 
 Communication latency is drastically reduced by the true zero copy mechanism.
